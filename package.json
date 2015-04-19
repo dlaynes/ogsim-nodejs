@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "clim": "^1.0.0",
-    "pretty-hrtime": "^0.2.2"
+    "pretty-hrtime": "^0.2.2",
+    "browser-process-hrtime" : "0.1.1"
   }
 }

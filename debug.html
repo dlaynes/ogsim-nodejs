@@ -10,7 +10,7 @@
         <!-- TODO: event handling -->
     </body>
     <!-- You can test the application in a browser using Browserify (and replacing the references to pretty-hrtime in the source code)-->
-    <script type="text/javascript" charset="iso-8859-1" src="use-browserify-or-similar.js"></script>
+    <script type="text/javascript" charset="iso-8859-1" src="ogsim-browserify.js"></script>
     <script>
     var attackerList = [
         {
@@ -37,7 +37,9 @@
         "2" : "Player 2"
     };
 
-    var battle = new OgsimBattle(attackerList, defenderList, function(stats, rounds){
+    var numSimulations = 1; //Does not work, yet!
+
+    var battle = new OgsimBattle(attackerList, defenderList, numSimulations, function(stats, rounds){
         console.log(stats);
         console.log(rounds);
     });

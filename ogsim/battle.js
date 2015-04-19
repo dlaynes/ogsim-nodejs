@@ -1,4 +1,4 @@
-var async = require("async");
+//var async = require("async");
 var Timer = require('./timer');
 
 var config = require('./config');

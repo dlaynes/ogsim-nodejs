@@ -1,6 +1,7 @@
 ##Ogame Battle Simulator
 
 Hi, this is an Nodejs battle simulator, based on the rules of Ogame.
+
 This is a proof of concept, since there are faster Ogame simulators in the web. However, node.js provides a very good speed.
 
 
@@ -27,8 +28,28 @@ nodejs app.js
 And you will see some untidy info in the console, showing the results of the battle :)
 
 
+### Web version
+
+The file *ogsim-browserify.js* was generated with this command:
+
+````
+browserify ogsim.js -o ogsim-browserify.js
+````
+
+Make sure you have Browserify installed globally. Also, this line must be uncommented in ogsim/timer.js:
+
+````
+process.hrtime = require('browser-process-hrtime');
+````
+
+*ogsim.js* creates the global variable OgsimBattle, based on the module *ogsim/battle.js*. See debug.html as an example.
+
+Open debug.html in a browser, and you will see the statistics in the javascript developer console.
+
+The browser will stop responding for a while, depending on how big are the fleets indicated in debug.html
+
+
 ### TODO
 
-- Instructions on how to use browserify and the debug.html file
 - Enable/Disable RapidFire, allow many battle simulations, etc ...
 - Web GUI, and parallel processes in web browsers.
