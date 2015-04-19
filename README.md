@@ -2,7 +2,7 @@
 
 Hi, this is an Nodejs battle simulator, based on the rules of Ogame.
 
-This is a proof of concept, since there are faster Ogame simulators in the web. However, node.js provides a very good speed.
+This is a proof of concept, since there are faster Ogame SAC simulators in the web. However, node.js provides a very good speed.
 
 
 Note: Currently I'm not including a GUI to enter ships and technologies, you need to edit a text file instead.
