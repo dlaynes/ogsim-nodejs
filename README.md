@@ -36,7 +36,7 @@ The file *ogsim-browserify.js* was generated with this command:
 browserify ogsim.js -o ogsim-browserify.js
 ````
 
-Make sure you have Browserify installed globally. Also, this line must be uncommented in ogsim/timer.js:
+Make sure you have Browserify installed globally. Also, this line must be uncommented in ogsim/timer.js before running it:
 
 ````
 process.hrtime = require('browser-process-hrtime');
