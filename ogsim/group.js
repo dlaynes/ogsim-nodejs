@@ -19,15 +19,12 @@ var group = function(fleetdataList, pricelist, rapidfire){
     this.fleetdataList = fleetdataList;
 };
 
-//Convert the configuration values into a large array of data
+//Convert the configuration values of every fleet into a large array of data
 group.prototype.expand = function(){
     var fte = [];
     for(var i=0, ft; i<this.fleets.length; i++){
         ft = this.fleets[i];
-
-        //same performance. It doesn't change anything
         ft.expandTo(this.expandedFleet);
-        //this.expandedFleet = this.expandedFleet.concat( ft.expand() );
     }
 }
 
@@ -46,27 +43,14 @@ group.prototype.clean = function(){
         }
     }
     this.expandedFleet = cleanList;
-
-    /*
-    //Sloooowwwww in V8, due to splice, and the reversal loop   
-    var i = this.expandedFleet;
-    while (i--) {
-        ship = this.expandedFleet[i];
-        if(ship[0]){
-            ship[1] = ship[2].s;
-        } else {
-            this.expandedFleet.splice(i, 1);
-        }
-    }
-    */
 };
 
 
 group.prototype.attack = function(contrary, stats){
     var m = contrary.expandedFleet.length, /* Amount of enemy ships */
         ft = null, /* UnitType of the current ship */
-        Dm = 0, /* Attack points of the current ship */
-        Dc = 0, /* Attack points required to bypass the Large Shield Dome defenses */
+        Dm = 0.0, /* Attack points of the current ship */
+        Dc = 0.0, /* Attack points required to bypass the Large Shield Dome defenses */
         f = null, /* Current Ship */
         uk = 0, /* Random defensive ship Index */
         u = null, /* Random defensive ship */
@@ -75,7 +59,7 @@ group.prototype.attack = function(contrary, stats){
         xp = 0.0, /* probability of an explosion */
         c, /* Amount of ships in the ally group */
         i = -1, /* Ally loop index */
-        rn = false; /* Let the current ship attack again, or not? */
+        rn = true; /* Let the current ship attack again, or not? */
 
     //we save the base amount of shoots, and the amount of ships in the ally fleet group.
     c = stats.sh = this.expandedFleet.length;
@@ -84,8 +68,8 @@ group.prototype.attack = function(contrary, stats){
         f = this.expandedFleet[i];
         ft = f[2];
         Dm = ft.d;
-        Dc = Dm * 100;
-        rn = false;
+        Dc = Dm * 100.0;
+        rn = true;
 
         //Current Ship loop
         do{
@@ -99,7 +83,7 @@ group.prototype.attack = function(contrary, stats){
             // Is this ship still operational? Well, let's check if it resists the shot
             if(u[0]){
 
-                //Shield wasn't strong enough to ignore the shot (Large Shield Domes)
+                //Shield wasn't strong enough to ignore the shot (Large Shield Domes check)
                 if( Dc > u[2].s ){
 
                     //Shield wasn't strong enough to survive the shot
@@ -133,7 +117,7 @@ group.prototype.attack = function(contrary, stats){
                     //contrary.expandedFleet[uk] = u;
 
 
-                // Unefective shot
+                // Unsuccesful shot
                 } else {
                     stats.sp = stats.sp + Dm; // We update the shield damage statistics
                     rn = false; //We leave the single ship loop, because there are no ships with rapidfire against Large Shield Domes
@@ -147,7 +131,7 @@ group.prototype.attack = function(contrary, stats){
                 if ( Math.random() < ft.rf[ut.i] ){
                     stats.sh = stats.sh + 1; //Yes we did. We update the total amount of shots
                     // We stay in the ship loop
-                    rn = true;
+                    //rn = true; <= implicit
                 } else {
                     rn = false; // We leave the ship loop
                 }

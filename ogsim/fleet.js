@@ -27,24 +27,6 @@ var fleet = function(fleetUnits, pricelist, rapidfireConfig, military_tech, defe
     //this.fleetUnits = fleetUnits;
 };
 
-/* Unused
-fleet.prototype.expand = function(){
-    var shiplist = [], model, ut;
-
-    for( var id in this.unitTypes ){
-        if(!this.unitTypes.hasOwnProperty(id)){ continue; }
-        ut = this.unitTypes[id];
-        model = [
-            ut.h,
-            ut.s,
-            ut
-        ];
-        shiplist = shiplist.concat(Tools.fillArray(model, ut.m));
-    }
-    return shiplist;
-};
- */
-
 //Push the fleet data configuration to the global array of ships
 fleet.prototype.expandTo = function(dataArray){
     var model, ut, apA = Tools.appendToArray;
