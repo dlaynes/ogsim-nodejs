@@ -1,0 +1,64 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'install', 'sige' ]
+2 info using npm@1.3.10
+3 info using node@v0.10.25
+4 warn package.json ogsim-js@0.1.0 No repository field.
+5 verbose readDependencies using package.json deps
+6 verbose cache add [ 'sige', null ]
+7 verbose cache add name=undefined spec="sige" args=["sige",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: 'sige',
+8 verbose parsed url   path: 'sige',
+8 verbose parsed url   href: 'sige' }
+9 silly lockFile c80281cb-sige sige
+10 verbose lock sige /home/donato/.npm/c80281cb-sige.lock
+11 silly lockFile c80281cb-sige sige
+12 silly lockFile c80281cb-sige sige
+13 verbose addNamed [ 'sige', '' ]
+14 verbose addNamed [ null, '*' ]
+15 silly lockFile 3216d1f3-sige sige@
+16 verbose lock sige@ /home/donato/.npm/3216d1f3-sige.lock
+17 silly addNameRange { name: 'sige', range: '*', hasData: false }
+18 verbose url raw sige
+19 verbose url resolving [ 'https://registry.npmjs.org/', './sige' ]
+20 verbose url resolved https://registry.npmjs.org/sige
+21 info trying registry request attempt 1 at 11:11:34
+22 http GET https://registry.npmjs.org/sige
+23 http 404 https://registry.npmjs.org/sige
+24 silly registry.get cb [ 404,
+24 silly registry.get   { date: 'Sun, 19 Apr 2015 16:11:35 GMT',
+24 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+24 silly registry.get     'content-type': 'application/json',
+24 silly registry.get     'cache-control': 'max-age=0',
+24 silly registry.get     'content-length': '51',
+24 silly registry.get     'accept-ranges': 'bytes',
+24 silly registry.get     via: '1.1 varnish',
+24 silly registry.get     age: '0',
+24 silly registry.get     'x-served-by': 'cache-iad2128-IAD',
+24 silly registry.get     'x-cache': 'MISS',
+24 silly registry.get     'x-cache-hits': '0',
+24 silly registry.get     'x-timer': 'S1429459895.320353,VS0,VE353',
+24 silly registry.get     'keep-alive': 'timeout=10, max=50',
+24 silly registry.get     connection: 'Keep-Alive' } ]
+25 silly lockFile 3216d1f3-sige sige@
+26 silly lockFile 3216d1f3-sige sige@
+27 error 404 'sige' is not in the npm registry.
+27 error 404 You should bug the author to publish it
+27 error 404
+27 error 404 Note that you can also install from a
+27 error 404 tarball, folder, or http url, or git url.
+28 error System Linux 3.13.0-37-generic
+29 error command "/usr/bin/nodejs" "/usr/bin/npm" "install" "sige"
+30 error cwd /var/www/html/dlaynes/nodejsprojects/ogsim-node.js
+31 error node -v v0.10.25
+32 error npm -v 1.3.10
+33 error code E404
+34 verbose exit [ 1, true ]

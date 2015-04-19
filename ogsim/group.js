@@ -136,7 +136,7 @@ group.prototype.attack = function(contrary, stats){
                 // Unefective shot
                 } else {
                     stats.sp = stats.sp + Dm; // We update the shield damage statistics
-                    break; //We leave the single ship loop, because there are no ships with rapidfire against Large Shield Domes
+                    rn = false; //We leave the single ship loop, because there are no ships with rapidfire against Large Shield Domes
                     //(and the attack completely failed)
                 }
             }
