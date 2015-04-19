@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>Ogsim</title>
+    </head>
+    <body>
+        <div>Speed test</div>
+        <!-- TODO: GUI -->
+        <!-- TODO: event handling -->
+    </body>
+    <!-- You can test the application in a browser using Browserify (and replacing the references to pretty-hrtime in the source code)-->
+    <script type="text/javascript" charset="iso-8859-1" src="use-browserify-or-similar.js"></script>
+    <script>
+    var attackerList = [
+        {
+            "fleet": {"204": 1500000},
+            "player_id" : "1",
+            "military_tech" : 10,
+            "defense_tech" : 10,
+            "hull_tech" : 10
+        }
+    ];
+
+    var defenderList = [
+        {
+            "fleet": {"206": 200000},
+            "player_id" : "2",
+            "military_tech" : 10,
+            "defense_tech" : 10,
+            "hull_tech" : 10
+        }
+    ];
+
+    var PlayerList = {
+        "1" : "Player 1",
+        "2" : "Player 2"
+    };
+
+    var battle = new OgsimBattle(attackerList, defenderList, function(stats, rounds){
+        console.log(stats);
+        console.log(rounds);
+    });
+    </script>
+</html>
