@@ -55,9 +55,9 @@ fleet.prototype.expandTo = function(dataArray){
 
         //template of a ship
         model = [
-            ut.h, //vida de la nave, basado en el hull
-            ut.s, //escudos de la nave, se recuperan despues de cada turno
-            ut //tipo
+            ut.h, //Ship Hull
+            ut.s, //Ship shields, they are repaired after every turn
+            ut //Unit type of the ship. (Object reference, good performance)
         ];
         //add the template to the global array list
         apA(dataArray, model, ut.m);
