@@ -1,5 +1,5 @@
 {
-  "name": "Ogsim Js",
+  "name": "ogsim-js",
   "version": "0.1.0",
   "description": "Ogame Battle Simulator, in node.js",
   "main": "index.js",
@@ -16,7 +16,6 @@
   "license": "ISC",
   "dependencies": {
     "clim": "^1.0.0",
-    /* "express": "^4.10.6", */
     "pretty-hrtime": "^0.2.2"
   }
 }
