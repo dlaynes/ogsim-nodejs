@@ -2,7 +2,7 @@ var Fleet = require('./fleet');
 var Tools = require('./tools');
 //var Randomarray = require('./randomarray');
 
-/* New attacking or defending Group */
+/* Creation of the attacking or defending Group */
 var group = function(fleetdataList, pricelist, rapidfire){
     var ft;
     this.fleets = [];
@@ -106,7 +106,7 @@ group.prototype.attack = function(contrary, stats){
                     if(Dm > u[1] ){
                         De = Dm - u[1]; // New damage, after substracting the shield points of the current target
                         stats.sp = stats.sp + u[1]; // We update the shield damage statistics
-                        //target's shield is not zero
+                        //target's shield is now zero
                         u[1] = 0;
 
                         if( De < u[0] ){ //Check if the ships "health" is higher than the damage
