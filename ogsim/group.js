@@ -129,7 +129,7 @@ group.prototype.attack = function(contrary, stats){
                         stats.sp = stats.sp + Dm; // We update the shield damage statistics
                     }
 
-                    // Actualizamos los datos (No es necesario, ya que en javascript los arrays son objetos pasados por referencia)
+                    //This step is not needed, u is an object, and is passed by reference
                     //contrary.expandedFleet[uk] = u;
 
 
@@ -156,8 +156,9 @@ group.prototype.attack = function(contrary, stats){
             }
 
         } while(rn);
-        //End of the fleet group loop
+        
     }
+    //End of the fleet group loop
 
 };
 
