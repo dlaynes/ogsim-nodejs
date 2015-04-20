@@ -53,3 +53,8 @@ The browser will stop responding for a while, depending on how big are the fleet
 
 - Enable/Disable RapidFire, allow many battle simulations, etc ...
 - Web GUI, and parallel processes in web browsers.
+
+
+
+Did you like this project? Let me know you are using it!
+Write down any questions to: **tickets AT ogniter.uservoice.com**
