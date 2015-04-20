@@ -56,5 +56,5 @@ The browser will stop responding for a while, depending on how big are the fleet
 
 
 
-Did you like this project? Let me know you are using it!
+Do you like this project? Let me know you are using it!
 Write down any questions to: **tickets AT ogniter.uservoice.com**
