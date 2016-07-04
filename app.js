@@ -8,7 +8,7 @@ var attackerList = [
     {
         //List of ships or defenses: {"unit_id": amount, "unit_id": amount, "unit_id": amount, ...}
         //Check ogsim/config.js for a valid list of unit types
-        "fleet": {"204": 1500000},
+        "fleet": {"204": 1500},
         "player_id" : "1", //Just invent a numeric value. A player can have different fleets in both lists, identified by their player id
         "military_tech" : 10,
         "defense_tech" : 10,
@@ -26,7 +26,7 @@ var attackerList = [
 
 var defenderList = [
     {
-        "fleet": {"206": 200000},
+        "fleet": {"206": 200},
         "player_id" : "2",
         "military_tech" : 10,
         "defense_tech" : 10,

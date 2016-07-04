@@ -2,34 +2,96 @@
 // shim for using process in browser
 
 var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+(function () {
+  try {
+    cachedSetTimeout = setTimeout;
+  } catch (e) {
+    cachedSetTimeout = function () {
+      throw new Error('setTimeout is not defined');
+    }
+  }
+  try {
+    cachedClearTimeout = clearTimeout;
+  } catch (e) {
+    cachedClearTimeout = function () {
+      throw new Error('clearTimeout is not defined');
+    }
+  }
+} ())
 var queue = [];
 var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
 
 function drainQueue() {
     if (draining) {
         return;
     }
+    var timeout = cachedSetTimeout(cleanUpNextTick);
     draining = true;
-    var currentQueue;
+
     var len = queue.length;
     while(len) {
         currentQueue = queue;
         queue = [];
-        var i = -1;
-        while (++i < len) {
-            currentQueue[i]();
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
         }
+        queueIndex = -1;
         len = queue.length;
     }
+    currentQueue = null;
     draining = false;
+    cachedClearTimeout(timeout);
 }
+
 process.nextTick = function (fun) {
-    queue.push(fun);
-    if (!draining) {
-        setTimeout(drainQueue, 0);
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        cachedSetTimeout(drainQueue, 0);
     }
 };
 
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
 process.title = 'browser';
 process.browser = true;
 process.env = {};
@@ -51,7 +113,6 @@ process.binding = function (name) {
     throw new Error('process.binding is not supported');
 };
 
-// TODO(shtylman)
 process.cwd = function () { return '/' };
 process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
@@ -59,38 +120,6 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 },{}],2:[function(require,module,exports){
-(function (process,global){
-module.exports = process.hrtime || hrtime
-
-// polyfil for window.performance.now
-var performance = global.performance || {}
-var performanceNow =
-  performance.now        ||
-  performance.mozNow     ||
-  performance.msNow      ||
-  performance.oNow       ||
-  performance.webkitNow  ||
-  function(){ return (new Date()).getTime() }
-
-// generate timestamp or delta
-// see http://nodejs.org/api/process.html#process_process_hrtime
-function hrtime(previousTimestamp){
-  var clocktime = performanceNow.call(performance)/10e3
-  var seconds = Math.floor(clocktime)
-  var nanoseconds = (clocktime%1)*10e9
-  if (previousTimestamp) {
-    seconds = seconds - previousTimestamp[0]
-    nanoseconds = nanoseconds - previousTimestamp[1]
-    if (nanoseconds<0) {
-      seconds--
-      nanoseconds += 10e9
-    }
-  }
-  return [seconds,nanoseconds]
-}
-
-}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":1}],3:[function(require,module,exports){
 /*jshint node:true */
 
 "use strict";
@@ -165,7 +194,7 @@ module.exports = function (source, opts) {
 	return results;
 };
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 (function (global){
 //Ogame simulator public interface (for browserify).
 
@@ -176,7 +205,7 @@ global.OgsimBattle = require("./ogsim/battle");
 
 //TODO: add jQuery events and stuff
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ogsim/battle":6}],5:[function(require,module,exports){
+},{"./ogsim/battle":5}],4:[function(require,module,exports){
 /* Statistics of a fleet group */
 
 var attackstatistics = function() {
@@ -193,7 +222,7 @@ attackstatistics.prototype.reset = function(){
 
 module.exports = attackstatistics;
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 //var async = require("async");
 var Timer = require('./timer');
 
@@ -301,7 +330,7 @@ battle.prototype.battle = function(){
 
 module.exports = battle;
 
-},{"./attackstatistics":5,"./config":7,"./group":10,"./roundstatistics":12,"./timer":13,"./tools":14}],7:[function(require,module,exports){
+},{"./attackstatistics":4,"./config":6,"./group":9,"./roundstatistics":11,"./timer":12,"./tools":13}],6:[function(require,module,exports){
 //Ogame data!!
 exports.pricelist = {
     "1" : {'id':"1", 'name':'planet', 'metal':0, 'crystal':0, 'deuterium':0, 'size':0,"position": null},
@@ -360,7 +389,7 @@ exports.rapidfire = {
 exports.lang = {
     
 };
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 var Resource = require('./resource');
 var Fleetunittype = require('./fleetunittype');
 var Tools = require('./tools');
@@ -450,7 +479,7 @@ fleet.prototype.getStats = function(){
 };
 
 module.exports = fleet;
-},{"./fleetunittype":9,"./resource":11,"./tools":14}],9:[function(require,module,exports){
+},{"./fleetunittype":8,"./resource":10,"./tools":13}],8:[function(require,module,exports){
 var fleetunittype = function(resource, amount, attack, defense, hull){
     this.x = 0; /* Number of ships lost */
     this.m = amount; /* Original amount of ships */
@@ -486,7 +515,7 @@ fleetunittype.prototype.logBattle = function(){
 };
 
 module.exports = fleetunittype;
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var Fleet = require('./fleet');
 var Tools = require('./tools');
 //var Randomarray = require('./randomarray');
@@ -587,14 +616,14 @@ group.prototype.attack = function(contrary, stats){
                             u[0] = u[0] - De; //We substract health points from the target
 
                             // Probability of an explosion
-                            xp = ( ut.h - u[0] ) / ut.h;
-                            if(  ( xp > 0.3 ) && Math.random() < xp ) {
-                                u[0] = 0; // Kaboom
+                            xp = u[0] / ut.h;
+                            if(  ( xp < 0.7 ) && Math.random() < (1.0 - xp) ) {
+                                u[0] = 0.0; // Kaboom
                                 ut.x = ut.x + 1; // <- Increasing the number of explosions in the unittype statistics
                             }
 
                         } else {
-                            u[0] = 0; // Kaboom. The target did not survive that shot
+                            u[0] = 0.0; // Kaboom. The target did not survive that shot
                             ut.x = ut.x + 1; // <- Increasing the number of explosions in the statistics
                         }
                     } else {
@@ -606,7 +635,7 @@ group.prototype.attack = function(contrary, stats){
                     //contrary.expandedFleet[uk] = u;
 
 
-                // Unsuccesful shot
+                // Unsuccessful shot
                 } else {
                     stats.sp = stats.sp + Dm; // We update the shield damage statistics
                     rn = false; //We leave the single ship loop, because there are no ships with rapidfire against Large Shield Domes
@@ -640,7 +669,7 @@ group.prototype.getReports = function(){
 };
 
 module.exports = group;
-},{"./fleet":8,"./tools":14}],11:[function(require,module,exports){
+},{"./fleet":7,"./tools":13}],10:[function(require,module,exports){
 //resource information, based on the pricelist array
 var resource = function(pricelist, rapidfireConf){
 
@@ -713,7 +742,7 @@ resource.MOON = "2";
 resource.DEBRIS = "3";
 
 module.exports = resource;
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 //statistics of a battle round
 var Attackstatistics = require('./attackstatistics');
 
@@ -770,10 +799,10 @@ roundstatistics.prototype.update = function( round ){
 };
 
 module.exports = roundstatistics;
-},{"./attackstatistics":5}],13:[function(require,module,exports){
+},{"./attackstatistics":4}],12:[function(require,module,exports){
 (function (process){
 var prettyHrtime = require('pretty-hrtime'); //leave this line alone
-process.hrtime = require('browser-process-hrtime'); //Uncomment this line when using browserify
+//process.hrtime = require('browser-process-hrtime'); //Uncomment this line when using browserify
 
 var timer = function(){
     this.records = {};
@@ -818,7 +847,7 @@ timer.prototype.buildResults = function(){
 
 module.exports = timer;
 }).call(this,require('_process'))
-},{"_process":1,"browser-process-hrtime":2,"pretty-hrtime":3}],14:[function(require,module,exports){
+},{"_process":1,"pretty-hrtime":2}],13:[function(require,module,exports){
 /* Misc tools */
 var tools = function(){
 };
@@ -885,4 +914,4 @@ tools.bytesToSize = function(bytes) {
 };
 
 module.exports = tools;
-},{}]},{},[4]);
+},{}]},{},[3]);

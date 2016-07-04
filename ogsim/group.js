@@ -98,14 +98,14 @@ group.prototype.attack = function(contrary, stats){
                             u[0] = u[0] - De; //We substract health points from the target
 
                             // Probability of an explosion
-                            xp = ( ut.h - u[0] ) / ut.h;
-                            if(  ( xp > 0.3 ) && Math.random() < xp ) {
-                                u[0] = 0; // Kaboom
+                            xp = u[0] / ut.h;
+                            if(  ( xp < 0.7 ) && Math.random() < (1.0 - xp) ) {
+                                u[0] = 0.0; // Kaboom
                                 ut.x = ut.x + 1; // <- Increasing the number of explosions in the unittype statistics
                             }
 
                         } else {
-                            u[0] = 0; // Kaboom. The target did not survive that shot
+                            u[0] = 0.0; // Kaboom. The target did not survive that shot
                             ut.x = ut.x + 1; // <- Increasing the number of explosions in the statistics
                         }
                     } else {
