@@ -1,6 +1,6 @@
 ##Ogame Battle Simulator
 
-Hi, this is an Nodejs battle simulator, based on the rules of Ogame.
+Hi, this is an Nodejs spaceship battle simulator, based on the rules of Ogame.
 
 This is a proof of concept, since there are faster Ogame SAC simulators in the web. However, node.js provides a very good speed.
 
