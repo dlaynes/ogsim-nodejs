@@ -1,4 +1,4 @@
-##Ogame Battle Simulator
+###Ogame Battle Simulator
 
 Hi, this is an Nodejs spaceship battle simulator, based on the rules of Ogame.
 
@@ -49,8 +49,11 @@ Open debug.html in a browser, and you will see the statistics in the javascript 
 The browser will stop responding for a while, depending on how big are the fleets indicated in debug.html
 
 
-### TODO
 
-- Enable/Disable RapidFire, allow many battle simulations, etc ...
-- Web GUI, and parallel processes in web browsers.
+
+
+
+P.D: Here is a faster simulator, with a valid explosion formula
+
+https://github.com/dlaynes/crystal-lang-ogsim
 
