@@ -1,4 +1,4 @@
-###Ogame Battle Simulator
+## Ogame Battle Simulator
 
 Hi, this is an Nodejs spaceship battle simulator, based on the rules of Ogame.
 
@@ -9,7 +9,7 @@ Note: Currently I'm not including a GUI to enter ships and technologies, you nee
 I might add a web form in the future.
 
 
-###Usage
+### Usage
 
 After cloning the repository, run:
 
@@ -50,7 +50,7 @@ The browser will stop responding for a while, depending on how big are the fleet
 
 
 
-
+### Notes
 
 
 P.D: Here is a faster simulator, with a valid explosion formula
